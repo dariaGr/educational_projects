@@ -1,2 +1,1 @@
-# educational_projects
-# Will be filled soon
+Will be updated soon
