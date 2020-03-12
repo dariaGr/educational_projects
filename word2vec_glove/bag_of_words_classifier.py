@@ -1,4 +1,4 @@
-# text classification using bag-of-words features based on
+# Text Classification using bag-of-words features based on
 # word vectors from word2vec and GloVe
 
 import sys
@@ -16,7 +16,9 @@ test = pd.read_csv('r8-test-all-terms.txt', header=None, sep='\t')
 train.columns = ['label', 'content']
 test.columns = ['label', 'content']
 
-
+# WHERE TO GET THE VECTORS:
+# GloVe: https://nlp.stanford.edu/projects/glove/
+# Direct link: http://nlp.stanford.edu/data/glove.6B.zip
 
 class GloveVectorizer:
   def __init__(self):
@@ -25,7 +27,7 @@ class GloveVectorizer:
     word2vec = {}
     embedding = []
     idx2word = []
-    with open('../large_files/glove.6B/glove.6B.50d.txt') as f:
+    with open('glove.6B/glove.6B.50d.txt', encoding='UTF-8') as f:
       # is just a space-separated text file in the format:
       # word vec[0] vec[1] vec[2] ...
       for line in f:
@@ -131,6 +133,11 @@ Ytest = test.label
 
 # create the model, train it, print scores
 model = RandomForestClassifier(n_estimators=200)
+model.fit(Xtrain, Ytrain)
+print("train score:", model.score(Xtrain, Ytrain))
+print("test score:", model.score(Xtest, Ytest))
+
+model = ExtraTreesClassifier(n_estimators=200)
 model.fit(Xtrain, Ytrain)
 print("train score:", model.score(Xtrain, Ytrain))
 print("test score:", model.score(Xtest, Ytest))
